@@ -3,14 +3,14 @@ KoriaginAlex Infra repository
 
 ##Подключение через к someinternalhost в одну команду
 ```
-ssh -i alex -A alex@178.154.200.207 ssh alex@10.128.0.30 -tt
+ssh -i alex -A alex@130.193.49.66 ssh alex@10.128.0.30 -tt
 ```
 
 ##Подключение через alias (ssh someinternalhost)
 создать конфигуационный файл config в .ssh/ следующего вида:
 ```
 Host bastion
-Hostname 178.154.200.207
+Hostname 130.193.49.66
 User alex
 IdentityFile ~/.ssh/alex
 
