@@ -1,0 +1,38 @@
+#cloud-config
+disable_root: true
+timezone: Europe/Moscow
+repo-update: true
+repo-upgrade: true
+
+users:
+  - name: alex
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzpaMVmZW5Ti55H2tRqXoBB2c6H7ev5nMQ+dlqm3YFxs+bDReqRL8t6MmaumyF8JLjubsTv9xw7MRVw38l2VSK0mcbJQulGr2clzMCFAmcqKUPQP5lOexmoBcAtYFAMOE6I+2USCSQYu0BIAvOb1i8uXW2odclXYsT2HsWqhXY/0PEzkgGN5SnVazPLaz938X0J5ZOCBZdWCrGbDPBVj/LEsrAhvHSn2W00+QO7GecB8H1nDY7qpo3hXjP7Y2zBO75gMKxi5kyyZQByQJo78Z0opDJ5+4OXuhtha7PBNK2PYqEK3/rhSb2S+iUK2eHn2ungTKnISJoBdxLc2wPYOcdkfNw2sdlETkxWc7V6HJWrTw5dSCM1+8uldLsrxE1qjMN7Uge4i91x15Vd1G9epZta2qmoTIGXKAYYDUl40w19Wg8Xxwbw17Or84eW9cUGntpEPvS3ty+jwN4MiCDxyjVgeLo8oPpKcu28DbekMPxFNMPjgTQ+Yz/c0Zk7Y8ErIU= alex
+
+write_files:
+ - path: /home/alex/start.sh
+   permissions: '0755'
+   content: |
+     #!/bin/sh
+     sudo apt update
+     sudo apt install -y ruby-full ruby-bundler build-essential
+     wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+     echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+     sudo apt-get install apt-transport-https ca-certificates git -y
+     sudo apt-get update
+     sudo apt-get install -y mongodb-org
+     sudo systemctl start mongod
+     sudo systemctl enable mongod
+     cd /home/alex
+     sudo apt -y install git
+     git clone -b monolith https://github.com/express42/reddit.git
+     cd reddit && bundle install
+     puma -d
+runcmd:
+ - [ bash, /home/alex/start.sh ]
+
+final-message: |
+  cloud-init has finished
