@@ -1,5 +1,5 @@
 {
-  "key_file": "/path/to/key/file",
+  "key_file": "key.json",
   "folder_id": "folder-id",
   "source_image_family": "source-image-family",
   "image_family": "image-family",
