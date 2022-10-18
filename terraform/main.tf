@@ -6,14 +6,13 @@ terraform {
   }
 }
 provider "yandex" {
-  #  token     = "y0_AgAAAAAFt7n-AATuwQAAAADQJxMaLCrXWubxRqGPm1pSKMdYzja8mQM"
   service_account_key_file = var.service_account_key_file
   cloud_id                 = var.cloud_id
   folder_id                = var.folder_id
   zone                     = var.zone
 }
 resource "yandex_compute_instance" "app" {
-  #  name = "reddit-app"
+  name = "reddit-app-${count.index}"
   count    = var.app_count
   metadata = {
     ssh-keys = "alex:${file(var.public_key_path)}"
