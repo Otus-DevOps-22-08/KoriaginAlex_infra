@@ -1,3 +1,4 @@
+/.idea/
 /packer/variables.json
 *.tfstate
 *.tfstate.*.backup
