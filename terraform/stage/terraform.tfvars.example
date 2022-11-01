@@ -1,0 +1,11 @@
+cloud_id                 = "sdsd"
+folder_id                = "afsd"
+zone                     = "ru-central1-a"
+image_id                 = "asdasd"
+public_key_path          = "~/.ssh/yyy.pub"
+subnet_id                = "asd"
+service_account_key_file = "sss.json"
+app_count                = 1
+private_key_path         = "~/.ssh/xxx"
+app_disk_image           = "dsss"
+db_disk_image            = "sad"
