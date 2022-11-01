@@ -38,3 +38,8 @@ variable "db_disk_image" {
   description = "Disk image for reddit db"
   default     = "reddit-db-base"
 }
+variable "need_app_deploy" {
+  description = "Need to deploy app"
+  type = bool
+  default = false
+}

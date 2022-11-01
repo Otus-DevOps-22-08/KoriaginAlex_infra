@@ -12,18 +12,24 @@ provider "yandex" {
   folder_id                = var.folder_id
   zone                     = var.zone
 }
-module "app" {
-  source          = "../modules/app"
-  public_key_path = var.public_key_path
-  app_disk_image  = var.app_disk_image
-  subnet_id       = var.subnet_id
-}
 
 module "db" {
-  source          = "../modules/db"
-  public_key_path = var.public_key_path
-  db_disk_image   = var.db_disk_image
-  subnet_id       = var.subnet_id
+  source           = "../modules/db"
+  public_key_path  = var.public_key_path
+  db_disk_image    = var.db_disk_image
+  subnet_id        = var.subnet_id
+  private_key_path = var.private_key_path
+  need_app_deploy  = var.need_app_deploy
+}
+
+module "app" {
+  source           = "../modules/app"
+  public_key_path  = var.public_key_path
+  app_disk_image   = var.app_disk_image
+  subnet_id        = var.subnet_id
+  private_key_path = var.private_key_path
+  need_app_deploy  = var.need_app_deploy
+  db_ip            = module.db.db_internal_ip
 }
 #resource "yandex_compute_instance" "app" {
 #  name = "reddit-app-${count.index}"
