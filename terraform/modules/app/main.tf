@@ -1,13 +1,13 @@
-#terraform {
-#  required_providers {
-#    yandex = {
-#      source = "yandex-cloud/yandex"
-#    }
-#  }
-#  required_version = ">= 0.13"
-#}
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">= 0.13"
+}
 resource "yandex_compute_instance" "app" {
-  name = "reddit-app"
+  name   = "reddit-app"
   labels = {
     tags = "reddit-app"
   }
@@ -24,9 +24,9 @@ resource "yandex_compute_instance" "app" {
   }
 
   network_interface {
-#    subnet_id = yandex_vpc_subnet.app-subnet.id
+    #    subnet_id = yandex_vpc_subnet.app-subnet.id
     subnet_id = var.subnet_id
-    nat = true
+    nat       = true
   }
 
   metadata = {
@@ -51,7 +51,7 @@ resource "null_resource" "app-deployment" {
   }
 
   provisioner "file" {
-    content     = templatefile("${path.module}/files/puma.service.tmp", { db_ip = var.db_ip})
+    content     = templatefile("${path.module}/files/puma.service.tmp", { db_ip = var.db_ip })
     destination = "/tmp/puma.service"
   }
 
